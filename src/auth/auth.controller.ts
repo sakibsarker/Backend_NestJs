@@ -9,6 +9,9 @@ import {
 import { AuthService } from './auth.service';
 import { LoginDto } from 'src/users/dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
+import { Roles } from './decorators/roles.decorator';
+import { Role } from './roles.enum';
 
 @Controller('auth')
 export class AuthController {
