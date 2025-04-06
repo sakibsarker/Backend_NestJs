@@ -63,4 +63,12 @@ export class UsersService {
     const { password: _, ...result } = user;
     return result;
   }
+
+  async getUserById(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    return user;
+  }
 }

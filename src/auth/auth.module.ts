@@ -10,14 +10,14 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }), // Set JWT as the default strategy
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'ljfdlk343443y', // Replace with a secure secret key
-      signOptions: { expiresIn: '1h' }, // Token expiration time
+      secret: 'ljfdlk343443y',
+      signOptions: { expiresIn: '1h' },
     }),
     TypeOrmModule.forFeature([User]), // Register the User entity with TypeORM
   ],
-  providers: [AuthService, UsersService, JwtStrategy], // Remove PrismaService
+  providers: [AuthService, UsersService, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
