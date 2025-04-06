@@ -1,14 +1,24 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { PrismaService } from 'prisma/prisma.service';
-import { PrismaModule } from 'prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UsersModule, PrismaModule, AuthModule],
-  controllers: [AppController],
-  providers: [AppService, PrismaService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'your-supabase-host',
+      port: 5432,
+      username: 'your-supabase-username',
+      password: 'your-supabase-password',
+      database: 'your-database-name',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true, // Set to false in production
+    }),
+    UsersModule,
+    AuthModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
