@@ -3,7 +3,7 @@ import { Role } from 'src/auth/roles.enum';
 
 @Entity('users') // Table name
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column()
