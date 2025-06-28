@@ -7,7 +7,6 @@ import {
   Body,
   Param,
   UseGuards,
-  Request,
   Headers,
 } from '@nestjs/common';
 import { VideocallService } from './videocall.service';
@@ -48,18 +47,27 @@ export class VideocallController {
   }
 
   @Get('my-rooms')
-  async getMyRooms(@Request() req) {
-    return await this.videocallService.getMyRooms(req.user.id);
+  async getMyRooms(@Headers('authorization') auth: string) {
+    const userId = this.extractUserIdFromAuth(auth);
+    return await this.videocallService.getMyRooms(userId);
   }
 
   @Put('rooms/:id/leave')
-  async leaveRoom(@Request() req, @Param('id') id: string) {
-    return await this.videocallService.leaveRoom(req.user.id, id);
+  async leaveRoom(
+    @Headers('authorization') auth: string,
+    @Param('id') id: string,
+  ) {
+    const userId = this.extractUserIdFromAuth(auth);
+    return await this.videocallService.leaveRoom(userId, id);
   }
 
   @Delete('rooms/:id')
-  async endRoom(@Request() req, @Param('id') id: string) {
-    return await this.videocallService.endRoom(id, req.user.id);
+  async endRoom(
+    @Headers('authorization') auth: string,
+    @Param('id') id: string,
+  ) {
+    const userId = this.extractUserIdFromAuth(auth);
+    return await this.videocallService.endRoom(id, userId);
   }
 
   private extractUserIdFromAuth(authHeader: string): number {
